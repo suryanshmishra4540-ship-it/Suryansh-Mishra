@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Share My Location</title>
+</head>
+<body>
+    <button onclick="getLocation()">Click to Share My Location</button>
+    <p id="status"></p>
+
+    <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                document.getElementById("status").innerHTML = "Geolocation not supported.";
+            }
+        }
+
+        function showPosition(position) {
+            let lat = position.coords.latitude;
+            let lon = position.coords.longitude;
+            
+            // Send this data to you via email, WhatsApp, or your server
+            // Example: Open Google Maps link with his location
+            let mapLink = `https://www.google.com/maps?q=${lat},${lon}`;
+            document.getElementById("status").innerHTML = 
+                `<a href="${mapLink}" target="_blank">Click to View My Location on Google Maps</a>`;
+            
+            // Optional: Auto-send via WhatsApp
+            // let message = `My location: ${mapLink}`;
+            // window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        function showError(error) {
+            document.getElementById("status").innerHTML = "Error: " + error.message;
+        }
+    </script>
+</body>
+</html>
